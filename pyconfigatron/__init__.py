@@ -68,7 +68,7 @@ class ConfigStore(object):
         self.attributes.clear()
 
     def update_dict(self, d):
-        for key, value in d.iteritems():
+        for key, value in d.items():
             if isinstance(value, dict):
                 self[key].update_dict(value)
             else:
@@ -79,7 +79,7 @@ class ConfigStore(object):
 
     def __repr__(self):
         out = []
-        for key, value in sorted(self._attributes.iteritems()):
+        for key, value in sorted(self._attributes.items()):
             if isinstance(value, ConfigStore):
                 rendered = repr(value)
                 if rendered:
@@ -90,7 +90,7 @@ class ConfigStore(object):
 
     def to_dict(self):
         output = {}
-        for key, value in self.iteritems():
+        for key, value in self.items():
             if isinstance(value, ConfigStore):
                 value = value.to_dict()
             output[key] = value
@@ -101,7 +101,7 @@ class ConfigStore(object):
         return self._attributes.__iter__()
 
     def iteritems(self):
-        return self._attributes.iteritems()
+        return self._attributes.items()
 
     def items(self):
         return self._attributes.items()
@@ -138,7 +138,7 @@ class Configuration(object):
                     config = yaml.load(f)
                 except Exception as e:
                     _, _, tb = sys.exc_info()
-                    raise ConfigFileError, '{} (while loading {})'.format(e, filepath), tb
+                    raise ConfigFileError('{} (while loading {})'.format(e, filepath)).with_traceback(tb)
 
         self.register_parsed(config, filepath, raw=raw, optional=optional, nested=nested)
 
